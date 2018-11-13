@@ -13,22 +13,29 @@ var knex = require('knex')({
 
 var myArg = process.argv.slice(2);
 
-function getInfo() {
-knex.select('*').from('famous_people')
-.where('first_name', 'Mahatma')
-.asCallback(function(err, rows) {
-  // if (err) return console.error(err);
-  // knex.select('*').from('famous_people')
-  //   // .whereIn('nickname', _.pluck(rows, 'name'))
-  //   .asCallback(function(err, rows) {
+
+function addPerson(arr) {
+knex('famous_people').insert({first_name: `${arr[0]}`, last_name: `${arr[1]}`, birthdate: `${arr[2]}`}).asCallback(function(err, rows) {
       if (err) return console.error(err);
       console.log(rows);
     });
-// });
+};
+
+addPerson(myArg);
+
+
+function getInfo() {
+
+knex.select('*').from('famous_people')
+.where('first_name', 'Mahatma')
+.asCallback(function(err, rows) {
+      if (err) return console.error(err);
+      console.log(rows);
+    });
 }
 
 console.log("dude you're amazing");
 
 setTimeout((function() {
     return process.exit(22);
-}), 3000);
+}), 6000);
